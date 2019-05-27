@@ -1,0 +1,11 @@
+body,html {
+    margin: 0;
+    font-family: Catamaran,Helvetica,Arial,sans-serif
+}
+
+.main-background-color {
+    background-color: #2c405b;
+}
+.main-font-color {
+    color: #ffb900;
+}
