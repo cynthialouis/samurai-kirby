@@ -1,8 +1,6 @@
 # samurai-kirby
 
-## Project setup
-
-### Server side
+## Project setup Server side
 ```
 cd server
 npm install
@@ -12,7 +10,7 @@ npm install
 node server.js
 ```
 
-### Client side
+## Project setup Client side
 ```
 cd client
 npm install
