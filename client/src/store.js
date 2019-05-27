@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import VueTouch from 'vue-touch'
 
 Vue.use(Vuex)
+Vue.use(VueTouch, {name: 'v-touch'})
 
 export default new Vuex.Store({
     state: {
@@ -37,7 +39,7 @@ export default new Vuex.Store({
     },
     actions: {
         savePlayer(context) {
-            return axios.post('http://192.168.1.19:3000/items/save-player').then((res)=> {
+            return axios.post(`${process.env.VUE_APP_SERVER_URL}/items/save-player`).then((res)=> {
                 context.commit('setPlayer', res.data.id)
                 return res.data
             }).catch((error) => {
@@ -61,7 +63,7 @@ export default new Vuex.Store({
             context.dispatch('removePlayer')
         },
         removePlayer(context) {
-            return axios.put('http://192.168.1.19:3000/items/reset').then(()=> {
+            return axios.put(`${process.env.VUE_APP_SERVER_URL}/items/reset`).then(()=> {
                 context.commit('resetPlayer')
             }).catch((error) => {
                 //TODO

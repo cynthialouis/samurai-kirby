@@ -1,30 +1,34 @@
 <template>
-    <div tabindex="0" @keydown.space="play">
-        <the-header />
-        <div class="background home" v-if="is_not_started">
-            <div class="info">
-                <div>Press any key immediately when the exclamation mark pops up.</div>
-                <div>If successful, you win.</div>
-                <div>If not, you're dead on spot.</div>
+    <div tabindex="0" @keydown="play">
+        <!--<v-touch tag="a" v-on:tap="play">-->
+
+            <the-header />
+            <div class="background home" v-if="is_not_started">
+                <div class="info">
+                    <div>Press any key immediately when the exclamation mark pops up.</div>
+                    <div>If successful, you win.</div>
+                    <div>If not, you're dead on spot.</div>
+                </div>
+                <the-play-button class="play-button" ></the-play-button>
             </div>
-            <the-play-button class="play-button" ></the-play-button>
-        </div>
-        <div v-if="is_welcoming_new_player" class="background home">
-            <div class="welcome">Welcome Player {{ computed_player }}</div>
-            <div v-if="computed_player === 1" class="waiting">... waiting for Player 2</div>
-            <div v-else class="ready">... Ready to play ?</div>
-        </div>
-        <!--TODO-->
-        <transition>
-            <div v-if="is_loading_game" class="background home loading">
-                READY ... SET ... GO
+            <div v-if="is_welcoming_new_player" class="background home">
+                <div class="welcome">Welcome Player {{ computed_player }}</div>
+                <div v-if="computed_player === 1" class="waiting">... waiting for Player 2</div>
+                <div v-else class="ready">... Ready to play ?</div>
             </div>
-        </transition>
-        <div v-if="is_game_on" class="background">
-            <the-game-field :exclamation_mark="exclamation_mark_on" v-if="!winner && !looser"/>
-            <the-winning-field v-if="winner || looser" @done="resetsAll()"/>
-        </div>
-        <the-footer />
+            <!--TODO-->
+            <transition>
+                <div v-if="is_loading_game" class="background home loading">
+                    READY ... SET ... GO
+                </div>
+            </transition>
+            <div v-if="is_game_on" class="background">
+                <the-game-field :exclamation_mark="exclamation_mark_on" v-if="!winner && !looser"/>
+                <the-winning-field v-if="winner || looser" @done="resetsAll()"/>
+            </div>
+            <the-footer />
+
+        <!--</v-touch>-->
     </div>
 </template>
 
@@ -71,7 +75,7 @@
                 // every 0.5 seconds, check date -> max 7 sec because random would be between 1 and 6
                 let timerId = setInterval(() => {
                     this.checkCurrentDate(date)
-                }, 500)
+                }, 100)
 
                 setTimeout(() => { clearInterval(timerId);  }, 7000);
             },
@@ -128,7 +132,7 @@
                 this.is_game_on = false
                 this.resetGame()
             },
-            // TODO: improve
+            // TODO: fix and improve
             bounce() {
                 Anime({
                     targets: [],
@@ -162,10 +166,10 @@
             // Calls animation for the 'Get Set Ready' when game is loading
             is_loading_game(value) {
                 if(value) {
-                    this.bounce()
+                  //  this.bounce()
                 }
             }
-        }
+        },
     }
 </script>
 
@@ -188,4 +192,31 @@
         font-size: 25px;
     }
 
+    /* Galaxy S5 */
+    @media (max-width: 640px) {
+        .background {
+            top: 75px;
+            bottom: 50px;
+        }
+        .info {
+            margin-bottom: 90px;
+            margin-left: 15px;
+            margin-right: 15px;
+            font-size: 17px;
+        }
+    }
+
+    /* IPhone 6/7/8 */
+    @media (max-width: 670px) and (orientation: landscape) {
+        .background {
+            top: 75px;
+            bottom: 20px;
+        }
+        .info {
+            margin-bottom: 40px;
+            margin-left: 15px;
+            margin-right: 15px;
+            font-size: 15px;
+        }
+    }
 </style>

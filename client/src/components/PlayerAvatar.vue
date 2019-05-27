@@ -15,7 +15,7 @@
             header: {
                 type: Boolean,
                 default: false,
-            }
+            },
         },
         computed: {
             ...mapState(['player']),
@@ -45,7 +45,7 @@
 
 <style scoped lang="scss">
     .battle-avatar {
-        border-radius: 50%;
+        border-radius: 80%;
         width: 100px;
         height: 100px;
     }
@@ -59,5 +59,24 @@
     }
     .pink{
         background-color: #fc8c84;
+    }
+
+    /* Galaxy S5 */
+    @media (max-width: 640px) {
+        .battle-avatar {
+            width: 70px;
+            height: 70px;
+        }
+        .header-avatar{
+            max-width: 40px;
+            max-height: 40px;
+        }
+    }
+    /* IPhone 6/7/8 */
+    @media (max-width: 670px) and (orientation: landscape) {
+        .header-avatar{
+            max-width: 35px;
+            max-height: 35px;
+        }
     }
 </style>

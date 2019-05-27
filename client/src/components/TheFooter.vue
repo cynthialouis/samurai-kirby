@@ -16,8 +16,19 @@
         height: 50px;
     }
     footer span {
-        padding-left: 20px;
+        margin-left: 20px;
         font-size: 15px;
         line-height: 50px;
+    }
+
+    @media (max-width: 640px) {
+        footer {
+            height: 50px;
+        }
+        footer span {
+            margin-left: 10px;
+            font-size: 10px;
+            line-height: 50px;
+        }
     }
 </style>

@@ -36,4 +36,34 @@
         align-items: center;
         margin-right: 25px;
     }
+
+    /* Galaxy S5 */
+    @media (max-width: 640px) {
+        header {
+            height: 50px;
+        }
+        header span {
+            margin-left: 10px;
+            font-size: 15px;
+            line-height: 50px;
+        }
+        .avatar {
+            margin-right: 10px;
+        }
+    }
+
+    /* IPhone 6/7/8 */
+    @media (max-width: 670px) and (orientation: landscape) {
+        header {
+            height: 50px;
+        }
+        header span {
+            margin-left: 10px;
+            font-size: 15px;
+            line-height: 50px;
+        }
+        .avatar {
+            margin-right: 10px;
+        }
+    }
 </style>

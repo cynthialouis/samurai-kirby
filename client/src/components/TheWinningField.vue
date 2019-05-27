@@ -1,11 +1,8 @@
 <template>
     <div>
-        <!--TODO: animation-->
-        <transition name="bounce" >
-            <the-game-verdict class="verdict" :show_message="show_message" />
-        </transition>
+        <the-game-verdict class="verdict" :show_message="show_message" />
 
-        <div class="winning-field">
+        <div class="winning-field" v-if="!winner_bounce">
             <div class="first-player">
                 <player-avatar :id="1" />
             </div>
@@ -13,6 +10,12 @@
                 <player-avatar :id="2" />
             </div>
         </div>
+
+        <transition name="bounce">
+            <div class="winning-field" v-if="winner_bounce">
+                <player-avatar :id="winner_id" class="winner" />
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -28,11 +31,18 @@
         data() {
             return {
                 show_message: false,
-                verdict: ' '
+                winner_bounce: false,
             }
         },
         computed: {
             ...mapState(['player', 'winner', 'looser']),
+            winner_id() {
+                if (this.winner) {
+                    return this.winner
+                } else if (this.looser) {
+                    return this.looser === 1 ? 2 : 1
+                }
+            }
         },
         methods: {
             displayVerdict() {
@@ -45,28 +55,42 @@
             /**
              * Animated attack for winner
              */
-            // TODO: improve
             attack() {
-                var relativeEl = document.querySelector('.first-player')
-                relativeEl.style.transform = 'translateX(100px)'
+                const winner_class = this.winner === 1 ? '.first-player' : '.second-player'
+                const distance = this.winner === 1 ? '2500px' : '-2500px'
 
                 Anime({
-                    targets: '.first-player',
-                    translateX: '500px',
-                    easing: 'easeInOutCirc',
-                    rotate: {
-                        value: '+=2turn',
-                        duration: 1800,
-                        easing: 'easeInOutSine'
-                    },
-                    direction: 'alternate'
+                    targets: winner_class,
+                    translateX: distance,
+                    easing: 'easeInOutExpo',
                 })
-            }
+            },
+            /**
+             * Animated "winning dance"
+             */
+            bounce() {
+                this.winner_bounce = true
+
+                Anime({
+                    targets: '.winner',
+                    translateY: '60vh',
+                    duration: 300,
+                    loop: true,
+                    direction: 'alternate',
+                    easing: 'easeInCubic',
+                    scaleX: {
+                        value: 1.05,
+                        duration: 150,
+                        delay: 268
+                    }
+                })
+            },
         },
         mounted() {
             this.attack()
             setTimeout(() => {
                 this.displayVerdict()
+                this.bounce()
             }, 1500)
         }
     }
@@ -76,10 +100,18 @@
     .verdict {
         margin-top: 15%;
     }
-    /*.field {*/
-        /*display: flex;*/
-        /*margin-top: 20%;*/
-    /*}*/
+    .field {
+        display: flex;
+        margin-top: 20%;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .winning-field {
+        display: flex;
+        margin-top: 10%;
+        align-items: center;
+        justify-content: space-around;
+    }
     .first-player {
         flex-grow: 1;
         text-align: center;
@@ -88,9 +120,37 @@
         flex-grow: 1;
         text-align: center;
     }
-    .winning-field {
-        display: flex;
-        margin-top: 10%;
+    .winner {
+        flex-grow: 1;
+        text-align: center;
+        max-width: 100px;
+    }
+
+    /* Galaxy S5 */
+    @media (max-width: 640px) and (orientation: portrait) {
+        .winning-field {
+            margin-top: 30%;
+        }
+    }
+
+    /* Galaxy S5 */
+    @media (max-width: 640px) and (orientation: landscape) {
+        .verdict {
+            margin-top: 5%;
+        }
+        .winning-field {
+            margin-top: 5%;
+        }
+    }
+
+    /* IPhone 6/7/8 */
+    @media (max-width: 670px) and (orientation: landscape) {
+        .verdict {
+            margin-top: 0;
+        }
+        .winning-field {
+            margin-top: 5%;
+        }
     }
 
     .bounce-enter-active {
