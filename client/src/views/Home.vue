@@ -1,17 +1,16 @@
 <template>
     <div tabindex="0" @keydown="play">
-        <!--<v-touch tag="a" v-on:tap="play">-->
-
+        <v-touch v-on:tap="play">
             <the-header />
             <div class="background home" v-if="is_not_started">
-                <div class="info">
+                <div class="rules">
                     <div>Press any key immediately when the exclamation mark pops up.</div>
                     <div>If successful, you win.</div>
                     <div>If not, you're dead on spot.</div>
                 </div>
                 <the-play-button class="play-button" ></the-play-button>
             </div>
-            <div v-if="is_welcoming_new_player" class="background home">
+            <div v-if="is_welcoming_new_player" class="background home loading">
                 <div class="welcome">Welcome Player {{ computed_player }}</div>
                 <div v-if="computed_player === 1" class="waiting">... waiting for Player 2</div>
                 <div v-else class="ready">... Ready to play ?</div>
@@ -27,8 +26,7 @@
                 <the-winning-field v-if="winner || looser" @done="resetsAll()"/>
             </div>
             <the-footer />
-
-        <!--</v-touch>-->
+        </v-touch>
     </div>
 </template>
 
@@ -187,9 +185,15 @@
         justify-content: center;
         flex-direction: column;
     }
-    .info {
+    .rules {
         margin-bottom: 150px;
         font-size: 25px;
+    }
+    .loading {
+        font-size: 35px;
+    }
+    .welcome {
+        margin-bottom: 50px;
     }
 
     /* Galaxy S5 */
@@ -198,11 +202,17 @@
             top: 75px;
             bottom: 50px;
         }
-        .info {
+        .rules {
             margin-bottom: 90px;
             margin-left: 15px;
             margin-right: 15px;
             font-size: 17px;
+        }
+        .loading {
+            font-size: 25px;
+        }
+        .welcome {
+            margin-bottom: 30px;
         }
     }
 
@@ -212,11 +222,17 @@
             top: 75px;
             bottom: 20px;
         }
-        .info {
+        .rules {
             margin-bottom: 40px;
             margin-left: 15px;
             margin-right: 15px;
             font-size: 15px;
+        }
+        .loading {
+            font-size: 25px;
+        }
+        .welcome {
+            margin-bottom: 30px;
         }
     }
 </style>
