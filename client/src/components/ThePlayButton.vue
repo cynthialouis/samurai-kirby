@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button @click="submit">PLAY</button>
+        <button @click="submit" data-context="play-button">PLAY</button>
     </div>
 </template>
 
@@ -17,7 +17,7 @@
                 try {
                      await this.$store.dispatch('savePlayer')
                 } catch(error) {
-                    // TODO: error message
+                    // TODO
                     console.log('catch', error)
                 }
             }

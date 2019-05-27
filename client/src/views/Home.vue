@@ -3,24 +3,21 @@
         <v-touch v-on:tap="play">
             <the-header />
             <div class="background home" v-if="is_not_started">
-                <div class="rules">
+                <div class="rules" data-context="rules">
                     <div>Press any key immediately when the exclamation mark pops up.</div>
                     <div>If successful, you win.</div>
                     <div>If not, you're dead on spot.</div>
                 </div>
                 <the-play-button class="play-button" ></the-play-button>
             </div>
-            <div v-if="is_welcoming_new_player" class="background home loading">
+            <div v-if="is_welcoming_new_player" class="background home loading" data-context="welcoming-player">
                 <div class="welcome">Welcome Player {{ computed_player }}</div>
                 <div v-if="computed_player === 1" class="waiting">... waiting for Player 2</div>
                 <div v-else class="ready">... Ready to play ?</div>
             </div>
-            <!--TODO-->
-            <transition>
-                <div v-if="is_loading_game" class="background home loading">
-                    READY ... SET ... GO
-                </div>
-            </transition>
+            <div v-if="is_loading_game" class="background home loading">
+                READY ... SET ... GO
+            </div>
             <div v-if="is_game_on" class="background">
                 <the-game-field :exclamation_mark="exclamation_mark_on" v-if="!winner && !looser"/>
                 <the-winning-field v-if="winner || looser" @done="resetsAll()"/>
@@ -130,22 +127,6 @@
                 this.is_game_on = false
                 this.resetGame()
             },
-            // TODO: fix and improve
-            bounce() {
-                Anime({
-                    targets: [],
-                    translateY: '60vh',
-                    duration: 300,
-                    loop: true,
-                    direction: 'alternate',
-                    easing: 'easeInCubic',
-                    scaleX: {
-                        value: 1.05,
-                        duration: 150,
-                        delay: 268
-                    }
-                })
-            }
         },
         watch: {
             computed_player(value) {
@@ -161,12 +142,6 @@
                     }
                 }
             },
-            // Calls animation for the 'Get Set Ready' when game is loading
-            is_loading_game(value) {
-                if(value) {
-                  //  this.bounce()
-                }
-            }
         },
     }
 </script>

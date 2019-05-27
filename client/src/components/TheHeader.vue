@@ -1,7 +1,7 @@
 <template>
     <header class="main-background-color">
-        <span class="main-font-color">Samurai Kirby-like Game</span>
-        <player-avatar class="avatar" :header="true" />
+        <span class="main-font-color" data-context="header-title">Samurai Kirby-like Game</span>
+        <player-avatar class="avatar" :header="true" data-context="header-avatar" />
     </header>
 </template>
 

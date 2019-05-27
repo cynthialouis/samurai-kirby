@@ -43,7 +43,7 @@ export default new Vuex.Store({
                 context.commit('setPlayer', res.data.id)
                 return res.data
             }).catch((error) => {
-                //TODO
+                // TODO
                 console.log('error', error)
             })
         },
@@ -66,7 +66,7 @@ export default new Vuex.Store({
             return axios.put(`${process.env.VUE_APP_SERVER_URL}/items/reset`).then(()=> {
                 context.commit('resetPlayer')
             }).catch((error) => {
-                //TODO
+                // TODO
                 console.log('error', error)
             })
         },

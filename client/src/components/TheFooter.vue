@@ -1,6 +1,6 @@
 <template>
 <footer class="main-background-color">
-    <span class="main-font-color">Made with <3 by Cynthia</span>
+    <span class="main-font-color" data-context="footer-text">Made with <3 by Cynthia</span>
 </footer>
 </template>
 
